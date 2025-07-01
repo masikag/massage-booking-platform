@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center azijskih masaž</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="../src/logo1.png" alt="logo">
+  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="navbar-nav">
+        <a class="navbar-brand" href="index.html">Domov</a>
+        <a class="navbar-brand" href="massages.html">Masaže</a>
+        <a class="navbar-brand" href="masseuses.html">Maserke</a>
+        <a class="navbar-brand" href="reservation.html">Rezervacija</a>
+        <a class="navbar-brand" href="../customer/register.html">Prijava/registracija</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="app" class="container my-5">
+  <h2 class="mb-4">Rezervacija masaže</h2>
+  
+  <!-- korak 1: izberite masažo -->
+  <div class="mb-4">
+    <h4>1. Izberite masažo</h4>
+
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Največ minut</label>
+        <input type="number" v-model="filterDuration" class="form-control" placeholder="Npr. 50">
+      </div>
+      <div class="col-md-4">
+        <label for="cena" class="form-label">Največja cena: {{ filterPrice }} €</label>
+        <input type="range" v-model="filterPrice" class="form-range" id="cena" min="0" max="150" step="5">
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button @click="fetchFilteredMassages" class="btn btn-outline-primary w-100">Filtriraj</button>
+      </div>
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Ime</th>
+          <th>Trajanje</th>
+          <th>Cena</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          v-for="massage in massages" :key="massage.id" :class="{ 'table-active': selectedMassage && selectedMassage.id === massage.id }">
+          <td>{{ massage.massageName }}</td>
+          <td>{{ massage.duration }} min</td>
+          <td>{{ massage.price }} €</td>
+          <td>
+            <button @click="selectMassage(massage)" class="btn btn-success btn-sm">Izberi</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- korak 2: izberite maserko -->
+  <div v-if="selectedMassage" class="mb-4">
+    <h4>2. Izberite maserko</h4>
+    <select v-model="selectedMasseuseId" class="form-select w-50">
+      <option v-for="m in masseuses" :value="m.id">{{ m.masseuseName }}</option>
+    </select>
+  </div>
+
+  <!-- korak 3: izberite datum -->
+  <div v-if="selectedMasseuseId" class="mb-4">
+    <h4>3. Izberite datum</h4>
+    <input type="date" v-model="selectedDate" class="form-control w-50" @change="fetchSlots">
+  </div>
+
+  <!-- korak 4: prikaz terminov -->
+  <div v-if="availableSlots.length" class="mb-4">
+    <h4>4. Izberite prost termin</h4>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-secondary" 
+              v-for="slot in availableSlots" :key="slot" @click="selectedTime = slot" :class="{ 'btn-primary': selectedTime === slot }"> {{ slot }}
+      </button>
+    </div>
+  </div>
+
+  <!-- korak 5: potrditev z mailom in geslom -->
+  <div v-if="selectedTime" class="mb-4">
+    <h4>5. Potrdite rezervacijo</h4>
+    <input type="email" v-model="email" class="form-control mb-2 w-50" placeholder="E-mail">
+    <input type="password" v-model="password" class="form-control mb-3 w-50" placeholder="Geslo">
+    <button @click="confirmReservation" class="btn btn-success">Potrdi rezervacijo</button>
+    <p v-if="confirmationMessage" class="mt-3">{{ confirmationMessage }}</p>
+  </div>
+</main>
+
+
+
+<footer class="mt-5">
+  <div class="footer-section">
+    <h5>Podatki o podjetju</h5>
+    <p>Center azijskih masaž d.o.o.<br> Dunajska 123, 1000 Ljubljana<br> Davčna št.: SI12345678</p>
+    <p><small>&copy; 2025 Center azijskih masaž. Vse pravice pridržane.</small></p>
+  </div>
+  <div class="footer-section text-center">
+    <img src="../src/logo1.png" alt="logo" style="width: 80px; border-radius: 50%;"><br>
+        <div class="footer-menu mt-2">
+        <a href="index.html">Domov</a>
+        <a href="massages.html">Masaže</a>
+        <a href="masseuses.html">Maserke</a>
+        <a href="reservation.html">Rezervacija</a>
+        </div>
+  </div>
+  <div class="footer-section text-end">
+    <h5>Spremljaj nas</h5>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../js/main/reservation.js"></script>
+</body>
+</html>

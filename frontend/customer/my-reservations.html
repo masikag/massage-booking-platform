@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center azijskih masaž</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="../src/logo1.png" alt="logo">
+  </div>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="navbar-nav">
+        <a class="navbar-brand" href="login.html">Odjava</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="container py-5" id="app">
+  <div v-if="customer">
+    <h3 class="mb-4">Pozdravljen/a, {{ customer.name }} {{ customer.surname }}</h3>
+    <h5 class="mb-3">Vaše rezervacije</h5>
+
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Datum</th>
+          <th>Od</th>
+          <th>Do</th>
+          <th>Masaža</th>
+          <th>Maserka</th>
+          <th>Akcija</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(reservation, index) in customerReservations" :key="reservation.id">
+          <td>{{ index + 1 }}</td>
+          <td>{{ formatDate(reservation.startTime) }}</td>
+          <td>{{ formatTime(reservation.startTime) }}</td>
+          <td>{{ formatTime(reservation.endTime) }}</td>
+          <td>{{ reservation.massage.massageName }}</td>
+          <td>{{ reservation.masseuse.masseuseName }}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-primary me-2" @click="editReservation(reservation.id)">Uredi</button>
+            <button class="btn btn-sm btn-outline-danger" @click="deleteReservation(reservation.id)">Izbriši</button>
+          </td>
+        </tr>
+        <tr v-if="customerReservations.length === 0">
+          <td colspan="7" class="text-center">Ni rezervacij.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+
+<footer class="mt-0" style="margin-top: 0 !important;">
+  <div class="footer-section">
+    <h5>Podatki o podjetju</h5>
+    <p>Center azijskih masaž d.o.o.<br> Dunajska 123, 1000 Ljubljana<br> Davčna št.: SI12345678</p>
+    <p><small>&copy; 2025 Center azijskih masaž. Vse pravice pridržane.</small></p>
+  </div>
+  <div class="footer-section text-center">
+    <img src="../src/logo1.png" alt="logo" style="width: 120px; border-radius: 50%;"><br>
+        <!--<div class="footer-menu mt-2">
+        <a href="index.html">Domov</a>
+        <a href="massages.html">Masaže</a>
+        <a href="masseuses.html">Maserke</a>
+        <a href="reservation.html">Rezervacija</a>
+        </div>-->
+  </div>
+  <div class="footer-section text-end">
+    <h5>Spremljaj nas</h5>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../js/customer/my-reservations.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center azijskih masaž</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <img src="../src/logo1.png" alt="logo">
+  </div>
+</header>
+
+<main style="background-color: #f9f7f4;">
+  <div id="app" class="d-flex justify-content-center align-items-start" style="min-height: 70vh; padding-top: 40px; padding-bottom: 20px;">
+    <div class="card p-4 shadow-sm border-0 rounded-4" style="width: 100%; max-width: 420px; background-color: #fffaf4;">
+      <div class="text-center mb-4">
+        <i class="fas fa-user-circle fa-3x mb-2" style="color: #b08968;"></i>
+        <h4 class="fw-bold" style="color: #5a3e2b;">Prijava v sistem</h4>
+        <p class="text-muted small">Vnesite svoje podatke za dostop</p>
+      </div>
+
+      <form @submit.prevent="loginCustomer">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control rounded-3" id="email" v-model="email" placeholder="Uporabniško ime" required>
+          <label for="email">Uporabniško ime</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control rounded-3" id="password" v-model="password" placeholder="Geslo" required>
+          <label for="password">Geslo</label>
+        </div>
+
+        <button type="submit" class="btn w-100 rounded-3 py-2" style="background-color: #b08968; color: white;">Prijava</button>
+      </form>
+
+      <div v-if="errorMessage" class="text-danger mt-3 text-center fw-semibold">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+
+
+
+
+
+<footer class="mt-5">
+  <div class="footer-section">
+    <h5>Podatki o podjetju</h5>
+    <p>Center azijskih masaž d.o.o.<br> Dunajska 123, 1000 Ljubljana<br> Davčna št.: SI12345678</p>
+    <p><small>&copy; 2025 Center azijskih masaž. Vse pravice pridržane.</small></p>
+  </div>
+  <div class="footer-section text-center">
+    <img src="../src/logo1.png" alt="logo" style="width: 80px; border-radius: 50%;"><br>
+        <div class="footer-menu mt-2">
+        <a href="index.html">Domov</a>
+        <a href="massages.html">Masaže</a>
+        <a href="masseuses.html">Maserke</a>
+        <a href="reservation.html">Rezervacija</a>
+        </div>
+  </div>
+  <div class="footer-section text-end">
+    <h5>Spremljaj nas</h5>
+    <div class="social-icons">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="../js/customer/login.js"></script>
+</body>
+</html>
