@@ -82,7 +82,7 @@ Built to simulate a real-world spa environment, the platform supports both custo
 ```bash
 cd backend
 ./mvnw spring-boot:run
-
+```
 The backend will start at: http://localhost:8080
 
 ### 🌐 Use the Frontend
