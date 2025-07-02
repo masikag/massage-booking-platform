@@ -93,6 +93,7 @@ frontend/index.html
 
 ### 🗂️ Folder Structure
 
+```bash
 massage-booking-platform/
 ├── backend/              # Spring Boot backend
 │   └── src/
@@ -107,6 +108,7 @@ massage-booking-platform/
 ├── assets/               # Screenshots for the README
 ├── .gitignore
 └── README.md
+```
 
 ### 🛣️ Future Improvements
 
